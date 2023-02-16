@@ -14,7 +14,7 @@ export const appHtml=`
 
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item">
+      <a class="navbar-item" id="newItem">
         New Item
       </a>
 
@@ -47,3 +47,34 @@ export const appHtml=`
     </div>
 </div>
 `;
+
+export const formHtml=`
+<div class="container is-max-desktop">
+  <div class="notification is-primary">
+   
+  
+<div class="field">
+<label class="label">Titolo</label>
+<div class="control">
+  <input class="input" type="text" placeholder="Title input">
+</div>
+</div>
+
+
+<div class="field">
+<label class="label">Message</label>
+<div class="control">
+  <textarea class="textarea" placeholder="Textarea"></textarea>
+</div>
+</div>
+
+<div class="field is-grouped">
+<div class="control">
+  <button class="button is-link">Submit</button>
+</div>
+<div class="control">
+  <button class="button is-link is-light">Cancel</button>
+</div>
+</div>
+</div>
+</div>`;

@@ -1,9 +1,9 @@
 import {Item} from './item.js'
-import { appHtml } from './template.js';
+import {appHtml,formHtml} from './template.js';
 
 let prova= [new Item(1,"titolo di prova","testo di prova","10/03/2023"),new Item(2,"prova 2","ciao come va","15/04/2023"),new Item(3,"titolone","devo andare proprio li","10/08/2023"),new Item(4,"sa sa prova","non so cosa scrivere","10/12/2023"),new Item(5,"insieme","tma insieme a chi?","10/03/2022")];
 
-function paint(){
+function paintCard(){
     let firstColumn = document.getElementById("firstColumn");
     let secondColumn = document.getElementById("secondColumn");
     let thirdColumn = document.getElementById("thirdColumn");
@@ -52,7 +52,7 @@ function deleteSelectCard(){
     getSelectCardItem().then((selectCard) =>{
         if(selectCard){
             prova = prova.filter((el)=>{if("cardItem"+el.id!=selectCard.id) return el});
-            paint();
+            paintCard();
         }else{
             modalMessage("Nessun Item selezionato da eleiminare");
         }
@@ -86,8 +86,20 @@ function closeModal(el){
     });
   });
 
-let app = document.getElementById("app");
-app.innerHTML=appHtml;
-document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
+function toFormInsert(){
+    paintPage("insert");
+}
 
-paint();
+function paintPage(page){
+    let app = document.getElementById("app");
+    if(!page || page==="home"){
+        app.innerHTML=appHtml;
+        document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
+        document.getElementById("newItem").addEventListener('click',toFormInsert);
+    }else if(page==="insert"){
+        app.innerHTML=formHtml;
+    }
+}
+
+paintPage("home");
+paintCard();
