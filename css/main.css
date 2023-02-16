@@ -1,3 +1,6 @@
+.cardItem{
+    background-color: khaki !important;
+}
 .cardSelected{
-    background-color: lightpink;
+    background-color: lightpink !important;
 }

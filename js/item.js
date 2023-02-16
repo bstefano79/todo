@@ -17,21 +17,17 @@ export class Item{
     }
 };
 
-const cardHtml=`<div class="card" id="cardItem{{id}}">
+const cardHtml=`<div class="card cardItem" id="cardItem{{id}}">
 <header class="card-header">
-  <p class="card-header-title">
+  <p class="card-header-title is-size-7">
     {{title}} - {{date}}
   </p>
-  <button class="card-header-icon" aria-label="more options">
-    <span class="icon">
-      <i class="fas fa-angle-down" aria-hidden="true"></i>
-    </span>
-  </button>
 </header>
 <div class="card-content">
   <div class="content">
    {{text}}
   </div>
 </div>
-</div>`;
+</div><br>
+`;
 
