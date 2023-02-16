@@ -25,7 +25,7 @@ export const appHtml=`
       <a class="navbar-item">
         Clone
       </a>
-      <a class="navbar-item">
+      <a class="navbar-item" id="deleteItem">
       Delete
       </a>
       
@@ -34,7 +34,7 @@ export const appHtml=`
 </nav>
 <div class="columns" style="padding:10px">
     <div class="column" id="firstColumn">
-    
+
     </div>
     <div class="column" id="secondColumn">
     
