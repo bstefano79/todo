@@ -69,8 +69,25 @@ function selectCard(e){
     card.classList.add("cardSelected");
 }
 
+function modalMessage(message){
+    document.getElementById("modalMessage").classList.add('is-active');
+}
+
+function closeModal(el){
+    el.classList.remove('is-active');
+}
+
+(document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach((close) => {
+    const target = close.closest('.modal');
+
+    close.addEventListener('click', () => {
+      closeModal(target);
+    });
+  });
+
 let app = document.getElementById("app");
 app.innerHTML=appHtml;
 document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
+
 
 paint();
