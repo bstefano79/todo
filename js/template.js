@@ -33,17 +33,17 @@ export const appHtml=`
   </div>
 </nav>
 <div class="columns" style="padding:10px">
-    <div class="column">
-    First column
+    <div class="column" id="firstColumn">
+    
     </div>
-    <div class="column">
-    Second column
+    <div class="column" id="secondColumn">
+    
     </div>
-    <div class="column">
-    Third column
+    <div class="column" id="thirdColumn">
+    
     </div>
-    <div class="column">
-    Fourth column
+    <div class="column" id="fourthColumn">
+    
     </div>
 </div>
 `;
