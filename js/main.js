@@ -34,7 +34,6 @@ function paint(){
     addSelectableItem();
 }
 
-
 function addSelectableItem(){
     let cardItems = document.getElementsByClassName("cardItem");
     Array.from(cardItems).forEach((card)=>{
@@ -44,7 +43,7 @@ function addSelectableItem(){
 
 const getSelectCardItem= () =>  new Promise((resolve) => {
     let selectCards = document.getElementsByClassName("cardSelected");
-    if(selectCards.length>0){
+    if(selectCards.length>1){
         throw new Error("Qualcosa è andato storto non è prevista la multiselzione");
     }else  resolve(selectCards[0]);
   });
@@ -90,6 +89,5 @@ function closeModal(el){
 let app = document.getElementById("app");
 app.innerHTML=appHtml;
 document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
-
 
 paint();
