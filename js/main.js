@@ -42,34 +42,36 @@ function addSelectableItem(){
     })
 }
 
-function getSelectCardItem(){
+const getSelectCardItem= () =>  new Promise((resolve) => {
     let selectCards = document.getElementsByClassName("cardSelected");
-    if(selectCards>0){
-        //todo gestire l'errore
-    }else return selectCards[0];
-}
+    if(selectCards.length>0){
+        throw new Error("Qualcosa è andato storto non è prevista la multiselzione");
+    }else  resolve(selectCards[0]);
+  });
 
 function deleteSelectCard(){
-    let selectCard = getSelectCardItem();
-    if(selectCard){
-        prova = prova.filter((el)=>{if("cardItem"+el.id!=selectCard.id) return el});
-        paint();
-    }else{
-        //todo gestire l'errore
-        console.log("NESSUNA CARD DA ELIMINARE");
-    }
+    getSelectCardItem().then((selectCard) =>{
+        if(selectCard){
+            prova = prova.filter((el)=>{if("cardItem"+el.id!=selectCard.id) return el});
+            paint();
+        }else{
+            modalMessage("Nessun Item selezionato da eleiminare");
+        }
+    }).catch((err)=>modalMessage(err));
 }
 
 function selectCard(e){
     let card = e.currentTarget;
-    let selectCard = getSelectCardItem();
-    if(selectCard){
-        selectCard.classList.remove("cardSelected");
-    }
-    card.classList.add("cardSelected");
+    getSelectCardItem().then((selectCard) =>{
+        if(selectCard){
+            selectCard.classList.remove("cardSelected");
+        }
+        card.classList.add("cardSelected");
+    }).catch((err)=>modalMessage(err));
 }
 
 function modalMessage(message){
+    document.getElementById("modalMessageText").innerHTML=message;
     document.getElementById("modalMessage").classList.add('is-active');
 }
 
