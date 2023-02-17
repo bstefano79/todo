@@ -54,29 +54,29 @@ export const formHtml=`
   <input type="hidden" id="idItem" ></input> 
   <div class="field">
   <label class="label">Data</label>
-  <div class="control">
-    <input type="date" id="my-element">
+  <div class="control" id="dateControl">
+    <input type="date" id="date">
   </div>
   </div>
   
 <div class="field">
 <label class="label">Titolo</label>
-<div class="control">
-  <input class="input" type="text" placeholder="Title input">
+<div class="control" id="titleControl">
+  <input class="input" type="text" id="title" placeholder="Title input">
 </div>
 </div>
 
 
 <div class="field">
 <label class="label">Message</label>
-<div class="control">
-  <textarea class="textarea" placeholder="Textarea"></textarea>
+<div class="control" id="textControl">
+  <textarea class="textarea" id="text" placeholder="Textarea"></textarea>
 </div>
 </div>
 
 <div class="field is-grouped">
 <div class="control">
-  <button class="button is-link" >Submit</button>
+  <button class="button is-link" id="save">Save</button>
 </div>
 <div class="control">
   <button class="button is-link is-light" id="cancel">Cancel</button>

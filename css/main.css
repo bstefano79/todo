@@ -4,3 +4,9 @@
 .cardSelected{
     background-color: lightpink !important;
 }
+
+.errorControl{
+    border-style: solid;
+    border-color: red;
+    border-width: 2px;
+}

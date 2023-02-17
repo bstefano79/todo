@@ -112,6 +112,28 @@ function toFormInsert(){
     paintPage("insert");
 }
 
+function controlItemCardForm(){
+    (document.querySelectorAll('.errorControl') || []).forEach((el)=>el.classList.remove("errorControl"));
+    let id=document.getElementById('idItem').value;
+    let dateElem = document.querySelector('#date');
+    let date=null;
+    if (dateElem) {
+        date=dateElem.bulmaCalendar.value();
+    }
+    if(!date){
+        document.getElementById("dateControl").classList.add("errorControl");
+    }
+    let title= document.getElementById('title').value;
+    if(!title){
+        document.getElementById("titleControl").classList.add("errorControl");
+    }
+    let text= document.getElementById('text').value;
+    if(!text){
+        document.getElementById("textControl").classList.add("errorControl");
+    }
+    console.log(new Item(id,title,text,date));
+}
+
 function paintPage(page){
     let app = document.getElementById("app");
     if(!page || page==="home"){
@@ -125,16 +147,7 @@ function paintPage(page){
 
         // Initialize all input of type date
         bulmaCalendar.attach('[type="date"]', options);
-
-        // To access to bulmaCalendar instance of an element
-        var element = document.querySelector('#my-element');
-        if (element) {
-            // bulmaCalendar instance is available as element.bulmaCalendar
-            element.bulmaCalendar.on('select', function(datepicker) {
-                console.log(datepicker.data.value());
-            });
-        }
-
+       
         document.getElementById("cancel").addEventListener('click', ()=>{modalMessageChoice(cancelChoice,{
             yesCancel:()=>{
                 paintPage("home");
@@ -142,8 +155,9 @@ function paintPage(page){
             },
             noCancel:closeChoiceModal
         })});
-        
-        
+
+        document.getElementById("save").addEventListener('click',controlItemCardForm);
+            
     }
 }
 
