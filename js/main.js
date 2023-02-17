@@ -44,6 +44,7 @@ function addSelectableItem(){
 const getSelectCardItem= () =>  new Promise((resolve) => {
     let selectCards = document.getElementsByClassName("cardSelected");
     if(selectCards.length>1){
+        Array.from(selectCards).forEach((card)=>card.classList.remove("cardSelected"));
         throw new Error("Qualcosa è andato storto non è prevista la multiselzione");
     }else  resolve(selectCards[0]);
   });
