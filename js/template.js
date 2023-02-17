@@ -51,7 +51,13 @@ export const appHtml=`
 export const formHtml=`
 <div class="container is-max-desktop">
   <div class="notification is-primary">
-   
+  <input type="hidden" id="idItem" ></input> 
+  <div class="field">
+  <label class="label">Data</label>
+  <div class="control">
+    <input type="date" id="my-element">
+  </div>
+  </div>
   
 <div class="field">
 <label class="label">Titolo</label>
@@ -70,7 +76,7 @@ export const formHtml=`
 
 <div class="field is-grouped">
 <div class="control">
-  <button class="button is-link">Submit</button>
+  <button class="button is-link" >Submit</button>
 </div>
 <div class="control">
   <button class="button is-link is-light">Cancel</button>
