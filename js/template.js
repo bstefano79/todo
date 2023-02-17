@@ -57,6 +57,7 @@ export const formHtml=`
   <div class="control" id="dateControl">
     <input type="date" id="date">
   </div>
+  <p class="help is-danger hiddenHelp" id="dateHelp">La data non può essere vuota</p>
   </div>
   
 <div class="field">
@@ -64,6 +65,7 @@ export const formHtml=`
 <div class="control" id="titleControl">
   <input class="input" type="text" id="title" placeholder="Title input">
 </div>
+<p class="help is-danger hiddenHelp" id="titleHelp">Il titolo non può essere vuoto</p>
 </div>
 
 
@@ -72,6 +74,7 @@ export const formHtml=`
 <div class="control" id="textControl">
   <textarea class="textarea" id="text" placeholder="Textarea"></textarea>
 </div>
+<p class="help is-danger hiddenHelp" id="textHelp">Il testo del messaggio non può essere vuoto</p>
 </div>
 
 <div class="field is-grouped">

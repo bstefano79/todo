@@ -119,7 +119,8 @@ function toFormInsert(){
 }
 
 function controlItemCardForm(){
-    (document.querySelectorAll('.errorControl') || []).forEach((el)=>el.classList.remove("errorControl"));
+    let errorItem=false;
+    (document.querySelectorAll('.errorControl, .errorHelp') || []).forEach((el)=>el.classList.remove(...["errorControl","errorHelp"]));
     let id=document.getElementById('idItem').value;
     let dateElem = document.querySelector('#date');
     let date=null;
@@ -127,17 +128,32 @@ function controlItemCardForm(){
         date=dateElem.bulmaCalendar.value();
     }
     if(!date){
-        document.getElementById("dateControl").classList.add("errorControl");
+        errorItem=true;
+        ['Control','Help'].forEach(
+            (el)=>document.getElementById("date"+el).classList.add("error"+el));
     }
     let title= document.getElementById('title').value;
     if(!title){
-        document.getElementById("titleControl").classList.add("errorControl");
+        errorItem=true;
+        ['Control','Help'].forEach(
+            (el)=>document.getElementById("title"+el).classList.add("error"+el));
     }
     let text= document.getElementById('text').value;
     if(!text){
-        document.getElementById("textControl").classList.add("errorControl");
+        errorItem=true;
+        ['Control','Help'].forEach(
+            (el)=>document.getElementById("text"+el).classList.add("error"+el));
     }
-    console.log(new Item(id,title,text,date));
+    if(!errorItem){
+        if(!id){
+            //insert new
+            let maxId = prova.reduce((maxId,el)=>{maxId<el.id?el.id:maxId},prova[0].id);
+            prova.push(new Item(maxId,title,text,date));
+            paintPage("home");
+        }else{
+            //modifica
+        }
+    }
 }
 
 function paintPage(page){
