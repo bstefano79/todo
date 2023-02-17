@@ -148,7 +148,7 @@ function controlItemCardForm(){
     if(!errorItem){
         if(!id){
             //insert new
-            let maxId = prova.reduce((maxId,el)=>{maxId<el.id?el.id:maxId},prova[0].id);
+            let maxId = prova[0]?prova.reduce((maxId,el)=>{maxId<el.id?el.id:maxId},prova[0].id):1;
             prova.push(new Item(maxId,title,text,date));
             paintPage("home");
         }else{
