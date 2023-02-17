@@ -79,8 +79,13 @@ export const formHtml=`
   <button class="button is-link" >Submit</button>
 </div>
 <div class="control">
-  <button class="button is-link is-light">Cancel</button>
+  <button class="button is-link is-light" id="cancel">Cancel</button>
 </div>
 </div>
 </div>
 </div>`;
+
+export const cancelChoice=`
+<div style="padding 20px;height:50px;">sei sicuro di non voler salvare?</div>
+<button class="button is-danger">Si</button>
+`;

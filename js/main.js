@@ -1,5 +1,5 @@
 import {Item} from './item.js'
-import {appHtml,formHtml} from './template.js';
+import {appHtml,formHtml, cancelChoice} from './template.js';
 
 let prova= [new Item(1,"titolo di prova","testo di prova","10/03/2023"),new Item(2,"prova 2","ciao come va","15/04/2023"),new Item(3,"titolone","devo andare proprio li","10/08/2023"),new Item(4,"sa sa prova","non so cosa scrivere","10/12/2023"),new Item(5,"insieme","tma insieme a chi?","10/03/2022")];
 
@@ -74,6 +74,13 @@ function modalMessage(message){
     document.getElementById("modalMessage").classList.add('is-active');
 }
 
+function modalMessageChoice(message,func){
+    document.getElementById("modalMessageText").innerHTML=message;
+    let modalMessage = document.getElementById("modalMessage");
+    modalMessage.classList.add('is-active');
+    modalMessage.classList.add('choice');
+}
+
 function closeModal(el){
     el.classList.remove('is-active');
 }
@@ -82,7 +89,8 @@ function closeModal(el){
     const target = close.closest('.modal');
 
     close.addEventListener('click', () => {
-      closeModal(target);
+        if(!target.className.includes('choice'))
+            closeModal(target);
     });
   });
 
@@ -98,18 +106,10 @@ function paintPage(page){
         document.getElementById("newItem").addEventListener('click',toFormInsert);
     }else if(page==="insert"){
         app.innerHTML=formHtml;
-        let options={dateFormat: 'dd/MM/yyyy', lang: 'it-IT'};
+        let options={dateFormat: 'dd/MM/yyyy', lang: 'it-IT', displayMode:'dialog'};
 
         // Initialize all input of type date
-        var calendars = bulmaCalendar.attach('[type="date"]', options);
-
-        // Loop on each calendar initialized
-        for(var i = 0; i < calendars.length; i++) {
-            // Add listener to select event
-            calendars[i].on('select', date => {
-                console.log(date);
-            });
-        }
+        bulmaCalendar.attach('[type="date"]', options);
 
         // To access to bulmaCalendar instance of an element
         var element = document.querySelector('#my-element');
@@ -119,6 +119,10 @@ function paintPage(page){
                 console.log(datepicker.data.value());
             });
         }
+
+        let cancel=(e)=>{modalMessageChoice(cancelChoice,null)}
+        document.getElementById("cancel").addEventListener('click', cancel);
+        
         
     }
 }
