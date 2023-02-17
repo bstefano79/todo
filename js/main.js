@@ -158,6 +158,7 @@ function controlItemCardForm(){
 }
 
 function paintPage(page){
+
     let app = document.getElementById("app");
     if(!page || page==="home"){
         app.innerHTML=appHtml;
@@ -182,6 +183,24 @@ function paintPage(page){
         document.getElementById("save").addEventListener('click',controlItemCardForm);
             
     }
+
+    let navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+
+            // Get the target from the "data-target" attribute
+            let target = el.dataset.target;
+            let $target = document.getElementById(target);
+
+            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+
+        });
+    });
 }
 
 paintPage("home");
+
