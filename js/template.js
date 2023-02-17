@@ -87,5 +87,6 @@ export const formHtml=`
 
 export const cancelChoice=`
 <div style="padding 20px;height:50px;">sei sicuro di non voler salvare?</div>
-<button class="button is-danger">Si</button>
+<button class="button is-danger" id="yesCancel">Si</button>
+<button class="button is-primary" id="noCancel">No</button>
 `;

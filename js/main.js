@@ -74,8 +74,14 @@ function modalMessage(message){
     document.getElementById("modalMessage").classList.add('is-active');
 }
 
-function modalMessageChoice(message,func){
+function modalMessageChoice(message,funcObj){
     document.getElementById("modalMessageText").innerHTML=message;
+    if(funcObj){
+        for (const [key, value] of Object.entries(funcObj)) {
+            document.getElementById(key).addEventListener('click',value);
+          }
+          
+    }
     let modalMessage = document.getElementById("modalMessage");
     modalMessage.classList.add('is-active');
     modalMessage.classList.add('choice');
@@ -85,6 +91,14 @@ function closeModal(el){
     el.classList.remove('is-active');
 }
 
+function closeChoiceModal(){
+    (document.querySelectorAll('.choice') || []).forEach((close) => {
+        const target = close.closest('.modal');
+        target.classList.remove('choice');
+        target.classList.remove('is-active');
+    });
+}
+
 (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach((close) => {
     const target = close.closest('.modal');
 
@@ -92,7 +106,7 @@ function closeModal(el){
         if(!target.className.includes('choice'))
             closeModal(target);
     });
-  });
+});
 
 function toFormInsert(){
     paintPage("insert");
@@ -104,6 +118,7 @@ function paintPage(page){
         app.innerHTML=appHtml;
         document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
         document.getElementById("newItem").addEventListener('click',toFormInsert);
+        paintCard();
     }else if(page==="insert"){
         app.innerHTML=formHtml;
         let options={dateFormat: 'dd/MM/yyyy', lang: 'it-IT', displayMode:'dialog'};
@@ -120,12 +135,16 @@ function paintPage(page){
             });
         }
 
-        let cancel=(e)=>{modalMessageChoice(cancelChoice,null)}
-        document.getElementById("cancel").addEventListener('click', cancel);
+        document.getElementById("cancel").addEventListener('click', ()=>{modalMessageChoice(cancelChoice,{
+            yesCancel:()=>{
+                paintPage("home");
+                closeChoiceModal();
+            },
+            noCancel:closeChoiceModal
+        })});
         
         
     }
 }
 
 paintPage("home");
-paintCard();
