@@ -85,8 +85,8 @@ export const formHtml=`
 </div>
 </div>`;
 
-export const cancelChoice=`
-<div style="padding 20px;height:50px;">sei sicuro di non voler salvare?</div>
+export const modalChoice=`
+<div style="padding 20px;height:50px;">{{message}}</div>
 <button class="button is-danger" id="yesCancel">Si</button>
 <button class="button is-primary" id="noCancel">No</button>
 `;

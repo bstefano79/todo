@@ -1,5 +1,5 @@
 import {Item} from './item.js'
-import {appHtml,formHtml, cancelChoice} from './template.js';
+import {appHtml,formHtml, modalChoice} from './template.js';
 
 let prova= [new Item(1,"titolo di prova","testo di prova","10/03/2023"),new Item(2,"prova 2","ciao come va","15/04/2023"),new Item(3,"titolone","devo andare proprio li","10/08/2023"),new Item(4,"sa sa prova","non so cosa scrivere","10/12/2023"),new Item(5,"insieme","tma insieme a chi?","10/03/2022")];
 
@@ -51,8 +51,14 @@ const getSelectCardItem= () =>  new Promise((resolve) => {
 function deleteSelectCard(){
     getSelectCardItem().then((selectCard) =>{
         if(selectCard){
-            prova = prova.filter((el)=>{if("cardItem"+el.id!=selectCard.id) return el});
-            paintCard();
+            modalMessageChoice("sei sicuro di voler cancellare l'elemento selezionato?",{
+                yesCancel:()=>{
+                    prova = prova.filter((el)=>{if("cardItem"+el.id!=selectCard.id) return el});
+                    paintCard();
+                    closeChoiceModal();
+                },
+                noCancel:closeChoiceModal
+            });
         }else{
             modalMessage("Nessun Item selezionato da eleiminare");
         }
@@ -75,7 +81,7 @@ function modalMessage(message){
 }
 
 function modalMessageChoice(message,funcObj){
-    document.getElementById("modalMessageText").innerHTML=message;
+    document.getElementById("modalMessageText").innerHTML=modalChoice.replace('{{message}}',message);
     if(funcObj){
         for (const [key, value] of Object.entries(funcObj)) {
             document.getElementById(key).addEventListener('click',value);
@@ -148,7 +154,7 @@ function paintPage(page){
         // Initialize all input of type date
         bulmaCalendar.attach('[type="date"]', options);
        
-        document.getElementById("cancel").addEventListener('click', ()=>{modalMessageChoice(cancelChoice,{
+        document.getElementById("cancel").addEventListener('click', ()=>{modalMessageChoice("sei sicuro di non voler salvare?",{
             yesCancel:()=>{
                 paintPage("home");
                 closeChoiceModal();
