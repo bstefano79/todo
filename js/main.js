@@ -86,7 +86,7 @@ function modalMessageChoice(message,funcObj){
     if(funcObj){
         for (const [key, value] of Object.entries(funcObj)) {
             document.getElementById(key).addEventListener('click',value);
-          }
+        }
           
     }
     let modalMessage = document.getElementById("modalMessage");
@@ -115,15 +115,11 @@ function closeChoiceModal(){
     });
 });
 
-function toFormInsert(){
-    paintPage("insert");
-}
-
 function controlItemCardForm(){
     let errorItem=false;
     (document.querySelectorAll('.errorControl, .errorHelp') || []).forEach((el)=>el.classList.remove(...["errorControl","errorHelp"]));
-    let id=document.getElementById('idItem').value;
-    let dateElem = document.querySelector('#date');
+    let id=document.getElementById('id').value;
+    let dateElem = document.getElementById('date');
     let date=null;
     if (dateElem) {
         date=dateElem.bulmaCalendar.value();
@@ -146,15 +142,17 @@ function controlItemCardForm(){
             (el)=>document.getElementById("text"+el).classList.add("error"+el));
     }
     if(!errorItem){
-        if(!id){
-            //insert new
-            let maxId = prova[0]?prova.reduce((maxId,el)=>{maxId<el.id?el.id:maxId},prova[0].id):1;
-            prova.push(new Item(maxId,title,text,date));
-            paintPage("home");
-        }else{
-            //modifica
-        }
+        return new Item(id,title,text,date);
     }
+    return false;
+}
+
+function selectCardToItem(selectCard){
+    let id = selectCard.id.replace("cardItem","")*1;
+    let title=selectCard.firstElementChild.firstElementChild.firstElementChild.innerHTML;
+    let date = selectCard.firstElementChild.firstElementChild.lastElementChild.innerHTML;
+    let text = selectCard.lastElementChild.firstElementChild.innerHTML;
+    return new Item(id,title,text,date);
 }
 
 function paintPage(page){
@@ -163,7 +161,9 @@ function paintPage(page){
     if(!page || page==="home"){
         app.innerHTML=appHtml;
         document.getElementById("deleteItem").addEventListener('click',deleteSelectCard);
-        document.getElementById("newItem").addEventListener('click',toFormInsert);
+        document.getElementById("newItem").addEventListener('click',()=> paintPage("insert"));
+        document.getElementById("editItem").addEventListener('click',()=> paintPage("edit"));
+
         paintCard();
     }else if(page==="insert"){
         app.innerHTML=formHtml;
@@ -180,8 +180,59 @@ function paintPage(page){
             noCancel:closeChoiceModal
         })});
 
-        document.getElementById("save").addEventListener('click',controlItemCardForm);
+        document.getElementById("save").addEventListener('click',()=>{
+
+            let newItem = controlItemCardForm();
+            if(newItem){
+                newItem.id=prova[0]?prova.reduce((maxId,el)=>maxId<el.id?el.id:maxId,prova[0].id):1;
+                prova.push(newItem);
+                paintPage("home");
+            }
+        });
             
+        
+    }
+    else if(page==="edit"){
+        getSelectCardItem().then((selectCard) =>{
+            if(selectCard){
+                app.innerHTML=formHtml;
+                let options={dateFormat: 'dd/MM/yyyy', lang: 'it-IT', displayMode:'dialog'};
+                let selectCardItem=selectCardToItem(selectCard)
+                // Initialize all input of type date
+                bulmaCalendar.attach('[type="date"]', options);
+                
+                for (const [key, value] of Object.entries(selectCardItem)) {
+                    if(key!="date"){
+                        document.getElementById(key).value=value
+                    }else{
+                        document.getElementById(key).bulmaCalendar.value(value);
+                    }
+                }
+
+                document.getElementById("cancel").addEventListener('click', ()=>{modalMessageChoice("sei sicuro di non voler salvare?",{
+                    yesCancel:()=>{
+                        paintPage("home");
+                        closeChoiceModal();
+                    },
+                    noCancel:closeChoiceModal
+                })});
+        
+                document.getElementById("save").addEventListener('click',()=>{
+                    let modItem = controlItemCardForm();
+                    if(modItem){
+                        prova=prova.filter((el)=>{
+                            if(el.id==modItem.id){
+                                el.modToItem(modItem);
+                            }
+                            return el;
+                        });
+                        paintPage("home");
+                    }
+                });
+            }else{
+                modalMessage("Nessun Item selezionato da modificare");
+            }
+        }).catch((err)=>modalMessage(err));
     }
 
     let navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);

@@ -6,6 +6,13 @@ export class Item{
         this.date=date;
     }
 
+    modToItem(other){
+      this.id=other.id;
+      this.title=other.title;
+      this.text=other.text;
+      this.date=other.date;
+    }
+
     toHtml(){
 
         let card = cardHtml;
@@ -20,13 +27,11 @@ export class Item{
 const cardHtml=`<div class="card cardItem" id="cardItem{{id}}">
 <header class="card-header">
   <p class="card-header-title is-size-7">
-    {{title}} - {{date}}
+    <span>{{title}}</span> - <span>{{date}}</span>
   </p>
 </header>
 <div class="card-content">
-  <div class="content">
-   {{text}}
-  </div>
+  <div class="content">{{text}}</div>
 </div>
 </div><br>
 `;

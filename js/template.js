@@ -18,7 +18,7 @@ export const appHtml=`
         New Item
       </a>
 
-      <a class="navbar-item">
+      <a class="navbar-item" id="editItem">
       Edit
       </a>
 
@@ -51,7 +51,7 @@ export const appHtml=`
 export const formHtml=`
 <div class="container is-max-desktop">
   <div class="notification is-primary">
-  <input type="hidden" id="idItem" ></input> 
+  <input type="hidden" id="id" ></input> 
   <div class="field">
   <label class="label">Data</label>
   <div class="control" id="dateControl">
